@@ -55,8 +55,8 @@ class LUMEModel(ABC):
 
         # Validate outputs
         for name in names:
-                variable = self.supported_variables[name]
-                variable.validate_value(outputs[name])
+            variable = self.supported_variables[name]
+            variable.validate_value(outputs[name])
 
         return outputs
 

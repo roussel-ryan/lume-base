@@ -51,7 +51,14 @@ class LUMEModel(ABC):
             if name not in self.supported_variables:
                 raise ValueError(f"Variable '{name}' is not supported by the model.")
 
-        return self._get(names)
+        outputs = self._get(names)
+
+        # Validate outputs
+        for name in names:
+                variable = self.supported_variables[name]
+                variable.validate_value(outputs[name])
+
+        return outputs
 
     @abstractmethod
     def _get(self, names: list[str]) -> dict[str, Any]:

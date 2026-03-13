@@ -71,6 +71,18 @@ class StagedModel(LUMEModel):
             for model in self.lume_model_instances
             for variable_name, variable in model.supported_variables.items()
         }
+    
+    def _get(self, names: list[str]) -> dict[str, Any]:
+        # get variable values from the appropriate model in the sequence
+        values = {}
+        for model in self.lume_model_instances:
+            model_variable_names = model.supported_variables.keys()
+            model_names = [name for name in names if name in model_variable_names]
+            if model_names:
+                model_values = model.get(model_names)
+                values.update(model_values)
+
+        return values
 
     def _set(self, values: dict[str, Any]) -> None:
         """
@@ -131,3 +143,8 @@ class StagedModel(LUMEModel):
                 # the incoming beam distribution will remain unchanged
                 new_input_beam_distribution = None
                 continue
+
+    def reset(self):
+        for model in self.lume_model_instances:
+            model.reset()
+

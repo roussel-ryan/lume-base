@@ -71,7 +71,7 @@ class StagedModel(LUMEModel):
             for model in self.lume_model_instances
             for variable_name, variable in model.supported_variables.items()
         }
-    
+
     def _get(self, names: list[str]) -> dict[str, Any]:
         # get variable values from the appropriate model in the sequence
         values = {}
@@ -147,4 +147,3 @@ class StagedModel(LUMEModel):
     def reset(self):
         for model in self.lume_model_instances:
             model.reset()
-

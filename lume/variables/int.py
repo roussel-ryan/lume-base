@@ -69,8 +69,8 @@ class IntVariable(Variable):
             self._validate_value_is_within_range(value, config=config)
 
     @staticmethod
-    def _validate_value_type(value: float):
-        if not isinstance(value, (int, float, np.integer)):
+    def _validate_value_type(value: int):
+        if not isinstance(value, (int, np.integer)):
             raise TypeError(
                 f"Expected value to be of type {int} or {np.integer}, but received {type(value)}."
             )

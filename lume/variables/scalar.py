@@ -14,11 +14,9 @@ class ScalarVariable(Variable):
     default_value : float | None
         Default value for the variable.
     value_range : tuple[float, float] | None
-        Value range that is considered valid for the variable. If the value range is set to None,
-        the variable is interpreted as a constant and values are validated against the default value.
+        Validate variable is in range [value_range[0], value_range[1]] (inclusive). Ignore if set to `None`.
     unit : str | None
         Unit associated with the variable.
-
     """
 
     default_value: float | None = None

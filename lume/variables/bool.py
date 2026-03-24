@@ -1,6 +1,5 @@
-from pydantic import field_validator, model_validator
+from pydantic import model_validator
 import numpy as np
-import warnings
 
 from lume.variables.variable import Variable, ConfigEnum
 

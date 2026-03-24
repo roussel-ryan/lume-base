@@ -39,12 +39,12 @@ class IntVariable(Variable):
             self.validate_value(self.default_value, ConfigEnum.ERROR)
         return self
 
-    def validate_value(self, value: float, config: ConfigEnum = None):
+    def validate_value(self, value: int, config: ConfigEnum = None):
         """Validates the given value.
 
         Parameters
         ----------
-        value : float
+        value : int
             The value to be validated.
         config : ConfigEnum, optional
             The configuration for validation. Defaults to None.
@@ -53,7 +53,7 @@ class IntVariable(Variable):
         Raises
         ------
         TypeError
-            If the value is not of type float.
+            If the value is not of type int.
         ValueError
             If the value is out of the valid range or does not match the default value
             for constant variables.
@@ -75,7 +75,7 @@ class IntVariable(Variable):
                 f"Expected value to be of type {int} or {np.integer}, but received {type(value)}."
             )
 
-    def _validate_value_is_within_range(self, value: float, config: ConfigEnum = None):
+    def _validate_value_is_within_range(self, value: int, config: ConfigEnum = None):
         config = self._validation_config_as_enum(config)
 
         if not self._value_is_within_range(value):

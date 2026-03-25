@@ -10,8 +10,13 @@ try:
 
     PARTICLE_GROUP_AVAILABLE = True
 except ImportError:
-    PARTICLE_GROUP_AVAILABLE = False
-    ParticleGroup = None
+    try:
+        from pmd_beamphysics import ParticleGroup
+
+        PARTICLE_GROUP_AVAILABLE = True
+    except ImportError:
+        PARTICLE_GROUP_AVAILABLE = False
+        ParticleGroup = None
 
 pytestmark = pytest.mark.skipif(
     not PARTICLE_GROUP_AVAILABLE, reason="beamphysics not available"

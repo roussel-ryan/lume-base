@@ -5,7 +5,11 @@ Module that creates a variable type for openpmd-beamphysics particle groups.
 from typing import Any
 
 from lume.variables.variable import Variable
-from beamphysics import ParticleGroup
+
+try:
+    from beamphysics import ParticleGroup
+except ImportError:
+    from pmd_beamphysics import ParticleGroup
 
 
 class ParticleGroupVariable(Variable):

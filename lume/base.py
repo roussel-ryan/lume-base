@@ -5,7 +5,7 @@ import warnings
 from abc import ABC, abstractmethod
 
 import yaml
-from pmd_beamphysics import ParticleGroup
+from beamphysics import ParticleGroup
 
 from lume.serializers.hdf5 import HDF5Serializer
 

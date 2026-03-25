@@ -6,7 +6,7 @@ from lume.variables.particle_group import ParticleGroupVariable
 
 # Try to import ParticleGroup, mark tests as skipped if not available
 try:
-    from pmd_beamphysics import ParticleGroup
+    from beamphysics import ParticleGroup
 
     PARTICLE_GROUP_AVAILABLE = True
 except ImportError:
@@ -14,7 +14,7 @@ except ImportError:
     ParticleGroup = None
 
 pytestmark = pytest.mark.skipif(
-    not PARTICLE_GROUP_AVAILABLE, reason="pmd_beamphysics not available"
+    not PARTICLE_GROUP_AVAILABLE, reason="beamphysics not available"
 )
 
 

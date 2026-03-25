@@ -70,7 +70,7 @@ class IntVariable(Variable):
 
     @staticmethod
     def _validate_value_type(value: int):
-        if not isinstance(value, (int, np.integer)):
+        if isinstance(value, bool) or not isinstance(value, (int, np.integer)):
             raise TypeError(
                 f"Expected value to be of type {int} or {np.integer}, but received {type(value)}."
             )

@@ -61,9 +61,9 @@ class LUMEModel(ABC):
         outputs = self._get(names)
 
         # Validate outputs
+        svars = self.supported_variables
         for name in names:
-            variable = self.supported_variables[name]
-            variable.validate_value(outputs[name])
+            svars[name].validate_value(outputs[name])
 
         return outputs if not return_single else outputs[names[0]]
 

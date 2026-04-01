@@ -80,6 +80,11 @@ class TestLUMEModel:
         assert isinstance(variables["output_var"], ScalarVariable)
         assert isinstance(variables["control_var"], MockVariable)
 
+    def test_get_single_variable_as_string(self, model):
+        """Test that get() can accept a single variable name as a string."""
+        result = model.get("input_var")
+        assert result == 1.0
+
     def test_get_valid_variables(self, model):
         """Test getting valid variable values."""
         result = model.get(["input_var", "output_var"])

@@ -29,7 +29,7 @@ class LUMEModel(ABC):
         Reset the simulator to its initial state.
     """
 
-    def get(self, names: list[str]) -> dict[str, Any]:
+    def get(self, names: list[str] | str) -> dict[str, Any] | Any:
         """
         Get measurements/state from the simulator. Should do the following:
         - validate input names against supported_variables
@@ -37,15 +37,22 @@ class LUMEModel(ABC):
 
         Parameters
         ----------
-        names: list[str]
-            List of variable names to get from the simulator.
+        names: list[str] | str
+            List of variable names or a single variable name to get from the simulator.
 
         Returns
         -------
-        dict[str, Any]
-            Dictionary of variable names and their corresponding values.
+        dict[str, Any] | Any
+            Dictionary of variable names and their corresponding values. If a single
+            variable name is provided, returns the value directly.
 
         """
+        # Handle single variable name input and set flag to return single value instead of dict
+        return_single = False
+        if isinstance(names, str):
+            names = [names]
+            return_single = True
+
         # Validate input names
         for name in names:
             if name not in self.supported_variables:
@@ -58,7 +65,7 @@ class LUMEModel(ABC):
             variable = self.supported_variables[name]
             variable.validate_value(outputs[name])
 
-        return outputs
+        return outputs if not return_single else outputs[names[0]]
 
     @abstractmethod
     def _get(self, names: list[str]) -> dict[str, Any]:

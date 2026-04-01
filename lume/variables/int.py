@@ -1,26 +1,25 @@
-import warnings
-
-import numpy as np
 from pydantic import field_validator, model_validator
+import numpy as np
+import warnings
 
 from lume.variables.variable import Variable, ConfigEnum
 
 
-class ScalarVariable(Variable):
-    """Variable for float values.
+class IntVariable(Variable):
+    """Variable for int values.
 
     Attributes
     ----------
-    default_value : float | None
+    default_value : int | None
         Default value for the variable.
-    value_range : tuple[float, float] | None
+    value_range : tuple[int, int] | None
         Validate variable is in range [value_range[0], value_range[1]] (inclusive). Ignore if set to `None`.
     unit : str | None
         Unit associated with the variable.
     """
 
-    default_value: float | None = None
-    value_range: tuple[float, float] | None = None
+    default_value: int | None = None
+    value_range: tuple[int, int] | None = None
     unit: str | None = None
 
     @field_validator("value_range", mode="before")
@@ -40,12 +39,12 @@ class ScalarVariable(Variable):
             self.validate_value(self.default_value, ConfigEnum.ERROR)
         return self
 
-    def validate_value(self, value: float, config: ConfigEnum = None):
+    def validate_value(self, value: int, config: ConfigEnum = None):
         """Validates the given value.
 
         Parameters
         ----------
-        value : float
+        value : int
             The value to be validated.
         config : ConfigEnum, optional
             The configuration for validation. Defaults to None.
@@ -54,7 +53,7 @@ class ScalarVariable(Variable):
         Raises
         ------
         TypeError
-            If the value is not of type float.
+            If the value is not of type int.
         ValueError
             If the value is out of the valid range or does not match the default value
             for constant variables.
@@ -70,13 +69,13 @@ class ScalarVariable(Variable):
             self._validate_value_is_within_range(value, config=config)
 
     @staticmethod
-    def _validate_value_type(value: float):
-        if not isinstance(value, (int, float, np.floating)) or isinstance(value, bool):
+    def _validate_value_type(value: int):
+        if isinstance(value, bool) or not isinstance(value, (int, np.integer)):
             raise TypeError(
-                f"Expected value to be of type {float} or {np.float64}, but received {type(value)}."
+                f"Expected value to be of type {int} or {np.integer}, but received {type(value)}."
             )
 
-    def _validate_value_is_within_range(self, value: float, config: ConfigEnum = None):
+    def _validate_value_is_within_range(self, value: int, config: ConfigEnum = None):
         config = self._validation_config_as_enum(config)
 
         if not self._value_is_within_range(value):
@@ -96,7 +95,6 @@ class ScalarVariable(Variable):
                 raise ValueError(error_message)
 
     def _value_is_within_range(self, value) -> bool:
-        value_range = self.value_range or (-np.inf, np.inf)
-
-        is_within_range = value_range[0] <= value <= value_range[1]
-        return is_within_range
+        if self.value_range is not None:
+            return self.value_range[0] <= value <= self.value_range[1]
+        return True

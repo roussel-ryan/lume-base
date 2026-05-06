@@ -63,7 +63,12 @@ class LUMEModel(ABC):
         # Validate outputs
         svars = self.supported_variables
         for name in names:
-            svars[name].validate_value(outputs[name])
+            try:
+                svars[name].validate_value(outputs[name])
+            except (ValueError, TypeError) as exc:
+                raise type(exc)(
+                    f"Validation failed for variable '{name}': {exc}"
+                ) from exc
 
         return outputs if not return_single else outputs[names[0]]
 
@@ -117,7 +122,12 @@ class LUMEModel(ABC):
 
                 if variable.read_only:
                     raise ValueError(f"Variable '{name}' is read-only. Cannot be set.")
-                variable.validate_value(values[name])
+                try:
+                    variable.validate_value(values[name])
+                except (ValueError, TypeError) as exc:
+                    raise type(exc)(
+                        f"Validation failed for variable '{name}': {exc}"
+                    ) from exc
 
         # Set the control parameters of the simulator
         self._set(values)

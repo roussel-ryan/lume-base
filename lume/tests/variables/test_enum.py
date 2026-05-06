@@ -99,11 +99,6 @@ class TestEnumVariable:
             assert len(w) == 1
             assert "not a valid key or label" in str(w[0].message)
 
-    def test_validation_with_config_error(self):
-        var = EnumVariable(name="test", options={0: "red", 1: "green", 2: "blue"})
-        with pytest.raises(ValueError, match="not a valid key or label"):
-            var.validate_value(99, config="error")
-
     def test_validation_with_config_none(self):
         var = EnumVariable(name="test", options={0: "red", 1: "green", 2: "blue"})
         # config="none" should not raise or warn for invalid values

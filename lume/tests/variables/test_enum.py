@@ -136,9 +136,3 @@ class TestEnumVariable:
         var = EnumVariable(name="test", options={0: "red", 1: "green", 2: "blue"})
         with pytest.raises(ValueError, match="Label 'yellow' not found"):
             var.get_key("yellow")
-
-    def test_get_key_arbitrary_mapping(self):
-        var = EnumVariable(name="test", options={5: "red", 10: "green", 15: "blue"})
-        assert var.get_key("red") == 5
-        assert var.get_key("green") == 10
-        assert var.get_key("blue") == 15

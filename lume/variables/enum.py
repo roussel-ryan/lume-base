@@ -1,5 +1,4 @@
 import warnings
-from typing import Any
 from pydantic import field_validator, model_validator
 
 from lume.variables.variable import Variable, ConfigEnum
@@ -28,7 +27,9 @@ class EnumVariable(Variable):
         if not value:
             raise ValueError("options must not be empty.")
         if not isinstance(value, dict):
-            raise ValueError("options must be a dictionary mapping integers to strings.")
+            raise ValueError(
+                "options must be a dictionary mapping integers to strings."
+            )
         for key, val in value.items():
             if not isinstance(key, int):
                 raise ValueError(
@@ -82,7 +83,9 @@ class EnumVariable(Variable):
                 f"Expected value to be int or str, but received {type(value).__name__}."
             )
 
-    def _validate_value_is_in_options(self, value: int | str, config: ConfigEnum = None):
+    def _validate_value_is_in_options(
+        self, value: int | str, config: ConfigEnum = None
+    ):
         """Validate that value is a valid key or label in the options mapping.
 
         Parameters

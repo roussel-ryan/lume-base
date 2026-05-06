@@ -68,9 +68,7 @@ class TestEnumVariable:
 
     def test_validation_uses_default_config(self):
         var = EnumVariable(
-            name="test",
-            options=["a", "b", "c"],
-            default_validation_config="warn"
+            name="test", options=["a", "b", "c"], default_validation_config="warn"
         )
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")

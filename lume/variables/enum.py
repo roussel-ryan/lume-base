@@ -74,9 +74,7 @@ class EnumVariable(Variable):
         config = self._validation_config_as_enum(config)
 
         if value not in self.options:
-            error_message = (
-                f"Value '{value}' of '{self.name}' is not one of the allowed options: {self.options}."
-            )
+            error_message = f"Value '{value}' of '{self.name}' is not one of the allowed options: {self.options}."
             if config == ConfigEnum.WARN:
                 warnings.warn(error_message)
             else:

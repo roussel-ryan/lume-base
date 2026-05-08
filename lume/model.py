@@ -173,5 +173,3 @@ class LUMEModel(ABC):
         raise NotImplementedError(
             "supported_variables property must be implemented by subclasses."
         )
-
-

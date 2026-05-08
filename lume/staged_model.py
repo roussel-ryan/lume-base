@@ -11,25 +11,24 @@ class InitialParticlesMixIn(ABC):
     """
     Mix in to LUMEModel to indicate support for initial particles.
     """
+
     @property
     @abstractmethod
-    def initial_particles(self) -> ParticleGroup:
-        ...
+    def initial_particles(self) -> ParticleGroup: ...
 
     @initial_particles.setter
     @abstractmethod
-    def initial_particles(self, val: ParticleGroup):
-        ...
+    def initial_particles(self, val: ParticleGroup): ...
 
 
 class FinalParticlesMixIn(ABC):
     """
     Mix in to LUMEModel to indicate support for final particles.
     """
+
     @property
     @abstractmethod
-    def final_particles(self) -> ParticleGroup:
-        ...
+    def final_particles(self) -> ParticleGroup: ...
 
 
 class StagedModel(LUMEModel):
@@ -103,7 +102,9 @@ class StagedModel(LUMEModel):
         """
         incoming_particles = None
         for i, model in enumerate(self.lume_model_instances):
-            model_values = {k: v for k, v in values.items() if k in model.supported_variables}
+            model_values = {
+                k: v for k, v in values.items() if k in model.supported_variables
+            }
 
             if i > 0 and incoming_particles is not None:
                 model.initial_particles = incoming_particles

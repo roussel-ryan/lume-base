@@ -180,6 +180,8 @@ class InitialParticlesMixIn(ABC):
     """
     Mix in to LUMEModel to indicate support for initial particles. Implement the following
     property setter and getter in the concrete class.
+
+    Note: changing the initial particle distribution should update the models state.
     """
     @property
     @abstractmethod

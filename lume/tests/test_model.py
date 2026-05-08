@@ -112,6 +112,16 @@ class TestLUMEModel:
         result = model.get([])
         assert result == {}
 
+    def test_get_variable_validation_error_includes_name(self, model):
+        """Test get() validation errors include the variable name."""
+        model._state["control_var"] = None
+
+        with pytest.raises(
+            ValueError,
+            match="Validation failed for variable 'control_var': Value cannot be None",
+        ):
+            model.get(["control_var"])
+
     def test_set_valid_variables(self, model):
         """Test setting valid variable values."""
         model.set({"input_var": 5.0, "control_var": "updated"})
@@ -159,6 +169,14 @@ class TestLUMEModel:
     def test_set_variable_none_validation(self, model):
         """Test setting variable to None with custom validation."""
         with pytest.raises(ValueError, match="Value cannot be None"):
+            model.set({"control_var": None})
+
+    def test_set_variable_validation_error_includes_name(self, model):
+        """Test set() validation errors include the variable name."""
+        with pytest.raises(
+            ValueError,
+            match="Validation failed for variable 'control_var': Value cannot be None",
+        ):
             model.set({"control_var": None})
 
     def test_set_mixed_valid_invalid_variables(self, model):

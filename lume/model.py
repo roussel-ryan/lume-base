@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Any
+from beamphysics import ParticleGroup
 
 from lume.variables import Variable
 
@@ -173,3 +174,30 @@ class LUMEModel(ABC):
         raise NotImplementedError(
             "supported_variables property must be implemented by subclasses."
         )
+
+
+class InitialParticlesMixIn(ABC):
+    """
+    Mix in to LUMEModel to indicate support for initial particles. Implement the following
+    property setter and getter in the concrete class.
+    """
+    @property
+    @abstractmethod
+    def initial_particles(self) -> ParticleGroup:
+        ...
+
+    @initial_particles.setter
+    @abstractmethod
+    def initial_particles(self, val: ParticleGroup):
+        ...
+
+
+class FinalParticlesMixIn(ABC):
+    """
+    Mix in to LUMEModel to indicate support for final particles. Implement the following
+    property in the concrete class.
+    """
+    @property
+    @abstractmethod
+    def final_particles(self) -> ParticleGroup:
+        ...
